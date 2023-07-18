@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SequenceValueGetter.cs" />
     <Compile Include="CertificateCallback.cs" />
     <Compile Include="DatabaseVersionControlTrigger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
