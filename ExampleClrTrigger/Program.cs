@@ -71,7 +71,7 @@ namespace ExampleClrTrigger
             byte[] inputBytes = System.IO.File.ReadAllBytes(loc);
 
             return ComputeAssemblyHash(inputBytes);
-        }
+        } // End Function ComputeAssemblyHash 
 
 
         public static string CreateAssemblyStatement()
@@ -97,7 +97,7 @@ namespace ExampleClrTrigger
             System.Console.WriteLine(sql);
 
             return sql;
-        }
+        } // End Function CreateAssemblyStatement 
 
 
 
