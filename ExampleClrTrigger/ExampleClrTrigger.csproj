@@ -63,7 +63,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="GetNextSequenceValue.sql" />
-    <Content Include="CreateAssembly2.sql" />
     <Content Include="CreateAssembly.sql" />
   </ItemGroup>
   <ItemGroup>
