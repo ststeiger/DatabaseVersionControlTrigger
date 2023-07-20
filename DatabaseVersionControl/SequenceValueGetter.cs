@@ -13,7 +13,7 @@ namespace DatabaseVersionControl
                 return objectName;
 
             return "\"" + objectName.Replace("\"", "\"\"") + "\"";
-        }
+        } // End Function QuoteObject 
 
 
         [Microsoft.SqlServer.Server.SqlFunction(DataAccess = Microsoft.SqlServer.Server.DataAccessKind.Read)]
