@@ -41,9 +41,9 @@ namespace DatabaseVersionControl
             } // End Using connection 
 
             if (result == null || result == System.DBNull.Value)
-                return new System.Data.SqlTypes.SqlInt64(0);
+                return new System.Data.SqlTypes.SqlInt64(0L);
 
-            return new System.Data.SqlTypes.SqlInt64((long)result);
+            return new System.Data.SqlTypes.SqlInt64((long)System.Convert.ChangeType(result, typeof(long)));
         } // End Function GetNextSequenceValue 
 
 
@@ -73,10 +73,10 @@ namespace DatabaseVersionControl
                     connection.Close();
             } // End Using connection 
 
-            // if (result == null || result == System.DBNull.Value)
-                // return new System.Data.SqlTypes.SqlInt64(0);
+            if (result == null || result == System.DBNull.Value)
+                return new System.Data.SqlTypes.SqlInt64(0L);
 
-            return new System.Data.SqlTypes.SqlInt64((long)result);
+            return new System.Data.SqlTypes.SqlInt64((long)System.Convert.ChangeType(result, typeof(long)));
         } // End Function GetHighestValue 
 
 

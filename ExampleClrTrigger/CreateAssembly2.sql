@@ -24,10 +24,10 @@ WITH PERMISSION_SET = UNSAFE
 ; 
 
 
-IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID(N'compatibility.GetHighestValue') AND type IN (N'FN', N'IF', N'TF', N'FS', N'FT'))
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID(N'compatibility.get_highest_value') AND type IN (N'FN', N'IF', N'TF', N'FS', N'FT'))
 BEGIN
     EXECUTE(N'
-CREATE FUNCTION compatibility.GetHighestValue
+CREATE FUNCTION compatibility.get_highest_value
 (
      @schema_name NVARCHAR(256) 
     ,@table_name NVARCHAR(256) 
@@ -37,9 +37,8 @@ RETURNS BIGINT
 AS 
 EXTERNAL NAME DatabaseVersionControl.[DatabaseVersionControl.SequenceValueGetter].GetHighestValue
 ; ' );
-
-    PRINT 'Function "compatibility.GetHighestValue" created successfully.'
 END
 
 
 GO 
+
