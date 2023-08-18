@@ -77,6 +77,9 @@ namespace ExampleClrTrigger
         public static string CreateAssemblyStatement()
         {
             string loc = typeof(DatabaseVersionControl.DatabaseVersionControlTrigger).Assembly.Location;
+            // loc = @"D:\Stefan.Steiger\Documents\Visual Studio 2017\TFS\Tools\EncryptionUtility\ClrEncryptDecrypt\bin\Debug\ClrEncryptDecrypt.dll";
+
+
             byte[] inputBytes = System.IO.File.ReadAllBytes(loc);
 
             string hash = ComputeAssemblyHash(inputBytes);
