@@ -10,7 +10,7 @@ namespace DatabaseVersionControl
         // CREATE FUNCTION dbo.GetXmlTag(@xmlInput xml, @tagname nvarchar(255)) 
         // RETURNS nvarchar(MAX) 
         // AS EXTERNAL NAME DatabaseVersionControl.[DatabaseVersionControl.XmlFunctionRepository].GetXmlTag 
-        [Microsoft.SqlServer.Server.SqlFunction]
+        [Microsoft.SqlServer.Server.SqlFunction(IsDeterministic = true)]
         public static System.Data.SqlTypes.SqlString GetXmlTag(
             System.Data.SqlTypes.SqlXml xmlInput,
             System.Data.SqlTypes.SqlString tagName
@@ -27,6 +27,7 @@ namespace DatabaseVersionControl
             //     -- RETURN @xmlInput.value('(//{sql:variable("@foo")})[1]', 'nvarchar(MAX)'); 
             //     RETURN @xmlInput.value('(//' + @tagName + ')[1]', 'nvarchar(MAX)'); 
             // END 
+
 
             try
             {

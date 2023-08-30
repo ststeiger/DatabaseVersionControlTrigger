@@ -172,7 +172,7 @@ namespace ExampleClrTrigger
             // TestRequest();
             // TestQuery();
             // ComputeAssemblyHash();
-            TestGetXmlTag();
+            // TestGetXmlTag();
             CreateAssemblyStatement();
 
             System.Console.WriteLine("Finished");
