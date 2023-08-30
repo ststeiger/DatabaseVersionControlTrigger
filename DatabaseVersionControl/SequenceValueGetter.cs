@@ -19,6 +19,15 @@ namespace DatabaseVersionControl
             if (xmlInput.IsNull)
                 return System.Data.SqlTypes.SqlString.Null;
 
+            // None of this is allowed: 
+            // CREATE FUNCTION dbo.GetXmlTag(@xmlInput xml, @tagName nvarchar(256)) 
+            //     RETURNS nvarchar(MAX) 
+            // BEGIN 
+            //     -- RETURN @xmlInput.value('(//U)[1]', 'nvarchar(MAX)'); 
+            //     -- RETURN @xmlInput.value('(//{sql:variable("@foo")})[1]', 'nvarchar(MAX)'); 
+            //     RETURN @xmlInput.value('(//' + @tagName + ')[1]', 'nvarchar(MAX)'); 
+            // END 
+
             try
             {
                 System.Xml.XmlDocument xmlDoc = new System.Xml.XmlDocument();
@@ -50,7 +59,7 @@ namespace DatabaseVersionControl
             }
 
             return System.Data.SqlTypes.SqlString.Null;
-        }
+        } // End Function GetXmlTag 
 
 
         private static string QuoteObject(string objectName)
