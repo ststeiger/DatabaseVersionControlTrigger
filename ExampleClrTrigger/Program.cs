@@ -48,7 +48,7 @@ namespace ExampleClrTrigger
 
             string sql = null;
 
-            using (System.Security.Cryptography.SHA512 sha512 = 
+            using (System.Security.Cryptography.SHA512 sha512 =
                 System.Security.Cryptography.SHA512.Create())
             {
                 byte[] hashBytes = sha512.ComputeHash(inputBytes);
@@ -83,14 +83,14 @@ namespace ExampleClrTrigger
             byte[] inputBytes = System.IO.File.ReadAllBytes(loc);
 
             string hash = ComputeAssemblyHash(inputBytes);
-            string hexString= ByteArrayHelper.ByteArrayToHex(inputBytes);
+            string hexString = ByteArrayHelper.ByteArrayToHex(inputBytes);
 
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
             sb.AppendLine(hash);
             sb.AppendLine(System.Environment.NewLine);
             sb.AppendLine("CREATE ASSEMBLY DatabaseVersionControl ");
             sb.AppendLine(@"-- FROM N'D:\username\Documents\Visual Studio 2017\Projects\ExampleClrTrigger\DatabaseVersionControl\bin\Debug\DatabaseVersionControl.dll' ");
-            sb.Append("FROM 0x"); sb.Append(hexString); sb.AppendLine(" "); 
+            sb.Append("FROM 0x"); sb.Append(hexString); sb.AppendLine(" ");
             sb.AppendLine("-- WITH PERMISSION_SET = SAFE ");
             sb.AppendLine("-- WITH PERMISSION_SET = EXTERNAL_ACCESS ");
             sb.AppendLine("WITH PERMISSION_SET = UNSAFE ");
@@ -103,6 +103,65 @@ namespace ExampleClrTrigger
         } // End Function CreateAssemblyStatement 
 
 
+        public static System.Data.SqlTypes.SqlXml CreateSqlXmlFromString(string xmlString)
+        {
+            try
+            {
+                // Create an XmlReader from the XML string
+                using (System.Xml.XmlReader xmlReader = System.Xml.XmlReader.Create(new System.IO.StringReader(xmlString)))
+                {
+                    // Create an SqlXml from the XmlReader
+                    System.Data.SqlTypes.SqlXml sqlXml = new System.Data.SqlTypes.SqlXml(xmlReader);
+                    return sqlXml;
+                }
+            }
+            catch (System.Exception ex)
+            {
+                // Handle any exceptions here, e.g., log the error
+                throw ex;
+            }
+        }
+    
+
+        public static string TestGetXmlTag()
+        {
+            string plain = @"<?xml version=""1.0"" encoding=""UTF-16""?>
+<table xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" routine_schema=""NULL"" routine_name=""UNKOWN"">
+  <row>
+    <U>MyU</U>
+    <U2>My2</U2>
+    <P>MyP</P>
+    <P2>MyP2</P2>
+    <R>MyR</R>
+    <LN>MyLN</LN>
+    <FN>MyFN</FN>
+    <E>MyE</E>
+    <Provider>shibb</Provider>
+    <Rabbit xsi:nil=""true"" />
+    <Empty1></Empty1>
+    <Empty2 />
+  </row>
+</table>";
+
+
+            System.Data.SqlTypes.SqlXml xml = CreateSqlXmlFromString(plain);
+
+            // System.Data.SqlTypes.SqlString x = DatabaseVersionControl.SequenceValueGetter.GetXmlTag(xml, "U");
+            System.Data.SqlTypes.SqlString x = DatabaseVersionControl.SequenceValueGetter.GetXmlTag(xml, "Rabbit");
+            x = DatabaseVersionControl.SequenceValueGetter.GetXmlTag(xml, "E");
+            x = DatabaseVersionControl.SequenceValueGetter.GetXmlTag(xml, "F");
+            x = DatabaseVersionControl.SequenceValueGetter.GetXmlTag(xml, "Empty1");
+            x = DatabaseVersionControl.SequenceValueGetter.GetXmlTag(xml, "Empty2");
+            if (x.IsNull)
+                return null;
+            else 
+                System.Console.WriteLine(x.Value);
+
+            return x.Value;
+        }
+
+
+
 
         /// <summary>
         /// Der Haupteinstiegspunkt für die Anwendung.
@@ -113,6 +172,7 @@ namespace ExampleClrTrigger
             // TestRequest();
             // TestQuery();
             // ComputeAssemblyHash();
+            TestGetXmlTag();
             CreateAssemblyStatement();
 
             System.Console.WriteLine("Finished");
