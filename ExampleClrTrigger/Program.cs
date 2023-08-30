@@ -146,12 +146,12 @@ namespace ExampleClrTrigger
 
             System.Data.SqlTypes.SqlXml xml = CreateSqlXmlFromString(plain);
 
-            // System.Data.SqlTypes.SqlString x = DatabaseVersionControl.SequenceValueGetter.GetXmlTag(xml, "U");
-            System.Data.SqlTypes.SqlString x = DatabaseVersionControl.SequenceValueGetter.GetXmlTag(xml, "Rabbit");
-            x = DatabaseVersionControl.SequenceValueGetter.GetXmlTag(xml, "E");
-            x = DatabaseVersionControl.SequenceValueGetter.GetXmlTag(xml, "F");
-            x = DatabaseVersionControl.SequenceValueGetter.GetXmlTag(xml, "Empty1");
-            x = DatabaseVersionControl.SequenceValueGetter.GetXmlTag(xml, "Empty2");
+            System.Data.SqlTypes.SqlString x = DatabaseVersionControl.XmlFunctionRepository.GetXmlTag(xml, "U");
+            // System.Data.SqlTypes.SqlString x = DatabaseVersionControl.XmlFunctionRepository.GetXmlTag(xml, "Rabbit");
+            // x = DatabaseVersionControl.XmlFunctionRepository.GetXmlTag(xml, "E");
+            // x = DatabaseVersionControl.XmlFunctionRepository.GetXmlTag(xml, "F");
+            // x = DatabaseVersionControl.XmlFunctionRepository.GetXmlTag(xml, "Empty1");
+            // x = DatabaseVersionControl.XmlFunctionRepository.GetXmlTag(xml, "Empty2");
             if (x.IsNull)
                 return null;
             else 
