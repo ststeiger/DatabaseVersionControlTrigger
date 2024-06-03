@@ -89,7 +89,7 @@ namespace ExampleClrTrigger
             sb.AppendLine(hash);
             sb.AppendLine(System.Environment.NewLine);
             sb.AppendLine("CREATE ASSEMBLY DatabaseVersionControl ");
-            sb.AppendLine(@"-- FROM N'D:\username\Documents\Visual Studio 2017\Projects\ExampleClrTrigger\DatabaseVersionControl\bin\Debug\DatabaseVersionControl.dll' ");
+            sb.AppendLine(@"-- FROM N'D:\username\Documents\Visual Studio 2022\github\DatabaseVersionControlTrigger\DatabaseVersionControl\bin\Debug\DatabaseVersionControl.dll' ");
             sb.Append("FROM 0x"); sb.Append(hexString); sb.AppendLine(" ");
             sb.AppendLine("-- WITH PERMISSION_SET = SAFE ");
             sb.AppendLine("-- WITH PERMISSION_SET = EXTERNAL_ACCESS ");
@@ -171,7 +171,7 @@ namespace ExampleClrTrigger
         {
             // TestRequest();
             // TestQuery();
-            // ComputeAssemblyHash();
+            ComputeAssemblyHash();
             // TestGetXmlTag();
             CreateAssemblyStatement();
 
