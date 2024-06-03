@@ -18,7 +18,8 @@ namespace DatabaseVersionControl
 
         [Microsoft.SqlServer.Server.SqlFunction(DataAccess = Microsoft.SqlServer.Server.DataAccessKind.Read)]
         public static System.Data.SqlTypes.SqlInt64 GetNextSequenceValue(
-            System.Data.SqlTypes.SqlString name
+             System.Data.SqlTypes.SqlString sequence_schema
+            ,System.Data.SqlTypes.SqlString sequence_name
         )
         {
             object result = null;
@@ -32,7 +33,12 @@ namespace DatabaseVersionControl
 
                 using (System.Data.Common.DbCommand cmd = connection.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT NEXT VALUE FOR " + QuoteObject(name.Value) + " AS seq ";
+                    cmd.CommandText = "SELECT NEXT VALUE FOR ";
+                    string sn = sequence_schema.Value;
+
+                    if (sn != null)
+                        cmd.CommandText += QuoteObject(sn) + ".";
+                    cmd.CommandText +=  QuoteObject(sequence_name.Value) + " AS seq ";
                     result = cmd.ExecuteScalar();
                 } // End Using cmd 
 

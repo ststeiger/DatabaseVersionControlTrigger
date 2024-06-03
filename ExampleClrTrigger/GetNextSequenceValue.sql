@@ -17,7 +17,8 @@ BEGIN
     EXECUTE(N'
 CREATE FUNCTION compatibility.get_next_sequence_value
 (
-    @method NVARCHAR(256)
+     @sequence_schema nvarchar(256) 
+    ,@sequence_name nvarchar(256) 
 ) 
 RETURNS BIGINT
 AS 
