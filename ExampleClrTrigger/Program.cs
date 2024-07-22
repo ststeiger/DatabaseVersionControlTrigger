@@ -1,4 +1,6 @@
 ﻿
+using System.Diagnostics.Eventing.Reader;
+
 namespace ExampleClrTrigger
 {
 
@@ -40,7 +42,7 @@ namespace ExampleClrTrigger
         } // End Sub TestRequest 
 
 
-        static string ComputeAssemblyHash(byte[] inputBytes)
+        static string ComputeAssemblyHash(byte[] inputBytes, string assembyName)
         {
             // DatabaseVersionControl.DatabaseVersionControlTrigger.OnDatabaseChange();
             // ALTER TABLE dbo.T_Benutzer ADD xxx int NULL;
@@ -54,7 +56,8 @@ namespace ExampleClrTrigger
                 byte[] hashBytes = sha512.ComputeHash(inputBytes);
                 string formattedHash = "0x" + System.BitConverter.ToString(hashBytes).Replace("-", "");
 
-                sql = "EXEC sp_add_trusted_assembly " + formattedHash + ", N'DatabaseVersionControl'; ";
+                // sql = "EXEC sp_add_trusted_assembly " + formattedHash + ", N'DatabaseVersionControl'; ";
+                sql = "EXEC sp_add_trusted_assembly " + formattedHash + ", N'" + assembyName.Replace("'", "''") + "'; ";
                 sql += System.Environment.NewLine;
                 sql += "-- EXEC sp_drop_trusted_assembly " + formattedHash + "; ";
 
@@ -65,31 +68,33 @@ namespace ExampleClrTrigger
         } // End Sub ComputeAssemblyHash 
 
 
-        static string ComputeAssemblyHash()
+        static string ComputeAssemblyHash(string assemblyLocation)
         {
-            string loc = typeof(DatabaseVersionControl.DatabaseVersionControlTrigger).Assembly.Location;
-            byte[] inputBytes = System.IO.File.ReadAllBytes(loc);
+            string assemblyName = System.IO.Path.GetFileNameWithoutExtension(assemblyLocation);
+            byte[] inputBytes = System.IO.File.ReadAllBytes(assemblyLocation);
 
-            return ComputeAssemblyHash(inputBytes);
+            return ComputeAssemblyHash(inputBytes, assemblyName);
         } // End Function ComputeAssemblyHash 
 
 
-        public static string CreateAssemblyStatement()
+        public static string CreateAssemblyStatement(string assemblyLocation)
         {
-            string loc = typeof(DatabaseVersionControl.DatabaseVersionControlTrigger).Assembly.Location;
-            // loc = @"D:\Stefan.Steiger\Documents\Visual Studio 2017\TFS\Tools\EncryptionUtility\ClrEncryptDecrypt\bin\Debug\ClrEncryptDecrypt.dll";
+            string assemblyName = System.IO.Path.GetFileNameWithoutExtension(assemblyLocation);
+            byte[] inputBytes = System.IO.File.ReadAllBytes(assemblyLocation);
 
-
-            byte[] inputBytes = System.IO.File.ReadAllBytes(loc);
-
-            string hash = ComputeAssemblyHash(inputBytes);
+            string hash = ComputeAssemblyHash(inputBytes, assemblyName);
             string hexString = ByteArrayHelper.ByteArrayToHex(inputBytes);
 
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
             sb.AppendLine(hash);
             sb.AppendLine(System.Environment.NewLine);
-            sb.AppendLine("CREATE ASSEMBLY DatabaseVersionControl ");
-            sb.AppendLine(@"-- FROM N'D:\username\Documents\Visual Studio 2022\github\DatabaseVersionControlTrigger\DatabaseVersionControl\bin\Debug\DatabaseVersionControl.dll' ");
+            sb.AppendLine("CREATE ASSEMBLY "+ assemblyName + " ");
+
+            // sb.AppendLine(@"-- FROM N'D:\username\Documents\Visual Studio 2022\github\DatabaseVersionControlTrigger\DatabaseVersionControl\bin\Debug\DatabaseVersionControl.dll' ");
+            sb.Append(@"-- FROM N'");
+            sb.Append(assemblyLocation.Replace("'","''"));
+            sb.AppendLine("' ");
+
             sb.Append("FROM 0x"); sb.Append(hexString); sb.AppendLine(" ");
             sb.AppendLine("-- WITH PERMISSION_SET = SAFE ");
             sb.AppendLine("-- WITH PERMISSION_SET = EXTERNAL_ACCESS ");
@@ -169,11 +174,18 @@ namespace ExampleClrTrigger
         [System.STAThread]
         public static int Main(string[] args)
         {
+            string loc = typeof(DatabaseVersionControl.DatabaseVersionControlTrigger).Assembly.Location;
+            // loc = @"D:\username\Documents\Visual Studio 2017\TFS\Tools\EncryptionUtility\ClrEncryptDecrypt\bin\Debug\ClrEncryptDecrypt.dll";
+            loc = @"D:\username\Documents\Visual Studio 2022\github\DatabaseVersionControlTrigger\ExampleClrAggregate\bin\Debug\ExampleClrAggregate.dll";
+
             // TestRequest();
             // TestQuery();
-            ComputeAssemblyHash();
+            string assemblyHash = ComputeAssemblyHash(loc);
             // TestGetXmlTag();
-            CreateAssemblyStatement();
+            string assemblyCreate = CreateAssemblyStatement(loc);
+
+            System.Console.WriteLine(assemblyCreate);
+
 
             System.Console.WriteLine("Finished");
             System.Console.ReadKey();
