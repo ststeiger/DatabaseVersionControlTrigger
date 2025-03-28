@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleClrAggregate", "Exam
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DelayedRowFunctionAssembly", "DelayedRowFunctionAssembly\DelayedRowFunctionAssembly.csproj", "{03DF5DCE-7C99-4897-A7A1-63965BBF1755}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CorEncryption", "CorEncryption\CorEncryption.csproj", "{0FDB3306-BC05-40DC-9B0D-87866F9D977D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateTrustedAssemblyHash", "CreateTrustedAssemblyHash\CreateTrustedAssemblyHash.csproj", "{9BB976FA-A912-4D0D-ACCD-4F381955F2FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +39,14 @@ Global
 		{03DF5DCE-7C99-4897-A7A1-63965BBF1755}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03DF5DCE-7C99-4897-A7A1-63965BBF1755}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03DF5DCE-7C99-4897-A7A1-63965BBF1755}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FDB3306-BC05-40DC-9B0D-87866F9D977D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FDB3306-BC05-40DC-9B0D-87866F9D977D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FDB3306-BC05-40DC-9B0D-87866F9D977D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FDB3306-BC05-40DC-9B0D-87866F9D977D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BB976FA-A912-4D0D-ACCD-4F381955F2FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BB976FA-A912-4D0D-ACCD-4F381955F2FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BB976FA-A912-4D0D-ACCD-4F381955F2FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BB976FA-A912-4D0D-ACCD-4F381955F2FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
