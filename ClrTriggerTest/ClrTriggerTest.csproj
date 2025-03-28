@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{BD892114-ED5F-44B8-86E5-08FF6E63F95B}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ExampleClrTrigger</RootNamespace>
-    <AssemblyName>ExampleClrTrigger</AssemblyName>
+    <RootNamespace>ClrTriggerTest</RootNamespace>
+    <AssemblyName>ClrTriggerTest</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -50,6 +50,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

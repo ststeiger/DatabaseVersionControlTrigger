@@ -1,5 +1,5 @@
 ﻿
-namespace ExampleClrTrigger
+namespace ClrTriggerTest
 {
 
 
